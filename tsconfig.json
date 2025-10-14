@@ -3,5 +3,8 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    // Path aliases should be configured using project references or the new moduleResolution settings in TypeScript 7.0+
+  }
 }

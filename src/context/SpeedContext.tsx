@@ -1,4 +1,4 @@
-import { SpeedType } from "@/utils/type";
+import { SpeedType } from "@/utils/types";
 import { createContext, ReactNode, useState } from "react";
 
 interface SpeedContextInterface {

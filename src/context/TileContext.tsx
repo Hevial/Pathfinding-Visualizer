@@ -2,7 +2,7 @@ import {
 	END_TILE_CONFIGURATION,
 	START_TILE_CONFIGURATION,
 } from "@/utils/constants";
-import { TileType } from "@/utils/type";
+import { TileType } from "@/utils/types";
 import { createContext, ReactNode, useState } from "react";
 
 interface TileContextInterface {

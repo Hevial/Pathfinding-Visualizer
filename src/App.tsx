@@ -3,7 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { PathfindingProvider } from "@/context/PathfindingContext";
 import { TileProvider } from "@/context/TileContext";
 import { SpeedProvider } from "@/context/SpeedContext";
-import { Test } from "@/components/Test";
+import { Grid } from "./components/Grid";
 
 function App() {
 	return (
@@ -11,7 +11,9 @@ function App() {
 			<PathfindingProvider>
 				<TileProvider>
 					<SpeedProvider>
-						<Test />
+						<div className="flex justify-center items-center h-screen w-screen p-12">
+							<Grid />
+						</div>
 					</SpeedProvider>
 				</TileProvider>
 			</PathfindingProvider>

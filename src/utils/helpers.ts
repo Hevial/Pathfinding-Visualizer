@@ -1,5 +1,5 @@
 import { MAX_COLS, MAX_ROWS } from "./constants";
-import { GridType, TileType } from "./type"
+import { GridType, TileType } from "./types"
 
 const createRow = (row: number, startTile: TileType, endTile: TileType) : TileType[] => {
 	const currentRow : TileType[] = [];

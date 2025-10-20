@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { AlgorithmType, GridType, MazeType } from "@/utils/type";
+import { AlgorithmType, GridType, MazeType } from "@/utils/types";
 import { createGrid } from "@/utils/helpers";
 import {
 	END_TILE_CONFIGURATION,

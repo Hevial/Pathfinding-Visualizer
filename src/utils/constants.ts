@@ -1,5 +1,5 @@
-export const MAX_ROWS = 40;
-export const MAX_COLS = 40;
+export const MAX_ROWS = 30;
+export const MAX_COLS = 30;
 
 export const START_TILE_CONFIGURATION = { 
 	row: 1,
@@ -26,7 +26,7 @@ export const END_TILE_CONFIGURATION = {
 };
 
 export const TILE_STYLE = "border-t border-r border-sky-200";
-export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-400";
+export const TRAVERSED_TILE_STYLE = TILE_STYLE + "bg-cyan-400";
 export const START_TILE_STYLE = TILE_STYLE + " bg-green-400";
 export const END_TILE_STYLE = TILE_STYLE + " bg-red-400";
 export const WALL_TILE_STYLE = TILE_STYLE + " bg-gray-400";

@@ -16,7 +16,7 @@ export function Nav() {
 					Pathfinding Visualizer
 				</div>
 
-				<div className="flex flex-col gap-2 sm:flex-row justify-center items-end">
+				<div className="flex flex-col gap-2 sm:flex-row justify-center items-end border">
 					<Select
 						label="Maze"
 						value={maze}
@@ -45,7 +45,7 @@ export function Nav() {
 						}}
 					/>
 					<PlayButton
-						handlerRunVisualizer={(e) => {
+						handlerRunVisualizer={() => {
 							// handler
 						}}
 						isDisabled={false}

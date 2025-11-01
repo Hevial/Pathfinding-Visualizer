@@ -51,6 +51,7 @@ export function Nav() {
 						label="Maze"
 						value={maze}
 						options={MAZES}
+						isDisabled={isDisabled}
 						onChange={(val) => {
 							handleGenerateMaze(val as MazeType);
 						}}
@@ -59,6 +60,7 @@ export function Nav() {
 						label="Algorithm"
 						value={algorithm}
 						options={ALGORITHMS}
+						isDisabled={isDisabled}
 						onChange={(val) => {
 							setAlgorithm(val as AlgorithmType);
 							//handle maze generation
@@ -68,6 +70,7 @@ export function Nav() {
 						label="Speed"
 						value={speed}
 						options={SPEEDS}
+						isDisabled={isDisabled}
 						onChange={(val) => {
 							setSpeed(Number(val) as SpeedType);
 							//handle speed

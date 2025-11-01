@@ -1,8 +1,12 @@
 import { MAX_COLS, MAX_ROWS } from "./constants";
-import { GridType, TileType } from "./types"
+import { GridType, TileType } from "./types";
 
-const createRow = (row: number, startTile: TileType, endTile: TileType) : TileType[] => {
-	const currentRow : TileType[] = [];
+const createRow = (
+	row: number,
+	startTile: TileType,
+	endTile: TileType
+): TileType[] => {
+	const currentRow: TileType[] = [];
 	for (let col = 0; col < MAX_COLS; col++) {
 		currentRow.push({
 			row,
@@ -17,30 +21,59 @@ const createRow = (row: number, startTile: TileType, endTile: TileType) : TileTy
 		});
 	}
 	return currentRow;
-}
+};
 
-export const createGrid = (startTile: TileType, endTile: TileType) : GridType => {
-	const grid : GridType = [];
+export const createGrid = (
+	startTile: TileType,
+	endTile: TileType
+): GridType => {
+	const grid: GridType = [];
 
 	for (let row = 0; row < MAX_ROWS; row++) {
 		grid.push(createRow(row, startTile, endTile));
 	}
 	return grid;
-}
+};
 
-export const checkIfStartOrEnd = (row: number, col: number) : boolean => {
-	return (row === 1 && col === 1) || (row === MAX_ROWS - 2 && col === MAX_COLS - 2);
-}
+export const checkIfStartOrEnd = (row: number, col: number): boolean => {
+	return (
+		(row === 1 && col === 1) ||
+		(row === MAX_ROWS - 2 && col === MAX_COLS - 2)
+	);
+};
 
-export const createNewGrid = (grid: GridType, row: number, col: number) : GridType => {
+export const createNewGrid = (
+	grid: GridType,
+	row: number,
+	col: number
+): GridType => {
 	const newGrid = grid.slice();
 
 	const newTile = {
 		...newGrid[row][col],
 		isWall: !newGrid[row][col].isWall,
-	}
+	};
 
 	newGrid[row][col] = newTile;
 
 	return newGrid;
-}
+};
+
+export const isEqual = (tileA: TileType, tileB: TileType): boolean => {
+	return tileA.row === tileB.row && tileA.col === tileB.col;
+};
+
+export const isRowColEqual = (
+	row: number,
+	col: number,
+	tile: TileType
+): boolean => {
+	return row === tile.row && col === tile.col;
+};
+
+export const sleep = (ms: number) => {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const getDelay = (delay: number, row: number, col: number) =>
+	delay * (row * (MAX_COLS / 2) + col);

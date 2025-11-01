@@ -44,7 +44,7 @@ export function Grid({
 
 	return (
 		<div
-			className="grid aspect-square h-full max-h-[min(100vh,100vw)] p-4"
+			className="grid aspect-square h-full max-h-[min(100vw,100vh)] p-4"
 			style={{
 				display: "grid",
 				gridTemplateColumns: `repeat(${MAX_COLS},  minmax(0, 1fr))`,

@@ -75,5 +75,24 @@ export const sleep = (ms: number) => {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const getDelay = (delay: number, row: number, col: number) =>
-	delay * (row * (MAX_COLS / 2) + col);
+export const getDelay = (delay: number, row: number, col: number) => {
+	return delay * (row * (MAX_COLS / 2) + col);
+};
+
+export const getRandomInt = (min: number, max: number): number => {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+};
+
+export const getRandomEvenInt = (min: number, max: number): number => {
+	let start = min % 2 === 0 ? min : min + 1;
+	let count = Math.floor((max - start) / 2) + 1;
+	return start + Math.floor(Math.random() * count) * 2;
+};
+
+export const getRandomOddInt = (min: number, max: number): number => {
+	let start = min % 2 === 1 ? min : min + 1;
+	let count = Math.floor((max - start) / 2) + 1;
+	return start + Math.floor(Math.random() * count) * 2;
+};

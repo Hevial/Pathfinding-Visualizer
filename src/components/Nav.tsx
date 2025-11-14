@@ -1,26 +1,49 @@
 import { usePathfinding } from "@/hooks/usePathfinding";
 import { Select } from "./Select";
-import { ALGORITHMS, MAZES, SPEEDS } from "@/utils/constants";
+import {
+	ALGORITHMS,
+	EXTENDED_SLEEP_TIME,
+	MAZES,
+	SLEEP_TIME,
+	SPEEDS,
+} from "@/utils/constants";
 import { AlgorithmType, MazeType, SpeedType } from "@/utils/types";
 import { PlayButton } from "./PlayButton";
 import { useSpeed } from "@/hooks/useSpeed";
 import { resetGrid } from "@/utils/resetGrid";
 import { useTile } from "@/hooks/useTile";
-import { useState } from "react";
+import { MutableRefObject, useState } from "react";
 import { ClearButton } from "./ClearButton";
 import { runMazeAlgorithm } from "@/utils/runMazeAlgorithm";
+import { runPanthfindingAlgoritm } from "@/utils/runPathfindingAlgorithm";
+import { animatePath } from "@/utils/animatePath";
 
-export function Nav() {
-	const { maze, setMaze, algorithm, setAlgorithm, grid } = usePathfinding();
+export function Nav({
+	isVisualizationRunningRef,
+}: {
+	isVisualizationRunningRef: MutableRefObject<boolean>;
+}) {
+	const {
+		maze,
+		setMaze,
+		algorithm,
+		setAlgorithm,
+		grid,
+		setGrid,
+		isGraphVisualized,
+		setIsGraphVisualized,
+	} = usePathfinding();
 	const { speed, setSpeed } = useSpeed();
 	const { startTile, endTile } = useTile();
 	const [isDisabled, setIsDisabled] = useState(false);
 
 	const handleGenerateMaze = (maze: MazeType) => {
+		setIsGraphVisualized(false);
+		resetGrid({ grid, startTile, endTile });
+
 		if (maze === "NONE") {
 			setMaze(maze);
 			setIsDisabled(false);
-			resetGrid({ grid, startTile, endTile });
 			return;
 		}
 
@@ -37,6 +60,46 @@ export function Nav() {
 			speed,
 			setIsDisabled,
 		});
+
+		const newGrid = grid.slice();
+		setGrid(newGrid);
+		setIsGraphVisualized(false);
+	};
+
+	const handlerRunVisualizer = () => {
+		if (isGraphVisualized) {
+			setIsGraphVisualized(false);
+			if (maze != "NONE") setMaze("NONE");
+			resetGrid({ grid: grid.slice(), startTile, endTile });
+			return;
+		}
+
+		const { traversedTiles, path } = runPanthfindingAlgoritm({
+			algorithm,
+			grid,
+			startTile,
+			endTile,
+		});
+
+		animatePath(traversedTiles, path, startTile, endTile, speed);
+		setIsDisabled(true);
+		isVisualizationRunningRef.current = true;
+
+		const speedVal = SPEEDS.find((s) => s.value === speed)!.value;
+		const traversedTime =
+			SLEEP_TIME * traversedTiles.length * speedVal + 1500;
+		const pathTime = EXTENDED_SLEEP_TIME * path.length * speedVal + 500;
+
+		setTimeout(() => {
+			console.log("BEFORE:", document.getElementById(`37-36`)?.className);
+
+			const newGrid = grid.slice();
+			setGrid(newGrid);
+			setIsGraphVisualized(true);
+			setIsDisabled(false);
+			isVisualizationRunningRef.current = false;
+			console.log("AFTER:", document.getElementById(`37-36`)?.className);
+		}, traversedTime + pathTime);
 	};
 
 	return (
@@ -83,16 +146,14 @@ export function Nav() {
 								if (maze !== "NONE") {
 									setMaze("NONE");
 								}
+								setIsGraphVisualized(false);
 							}}
 							isDisabled={isDisabled}
-							isGraphVisualized={true}
 						/>
 						<PlayButton
-							handlerRunVisualizer={() => {
-								// handler
-							}}
+							handlerRunVisualizer={handlerRunVisualizer}
 							isDisabled={isDisabled}
-							isGraphVisualized={true}
+							isGraphVisualized={isGraphVisualized}
 						/>
 					</div>
 				</div>

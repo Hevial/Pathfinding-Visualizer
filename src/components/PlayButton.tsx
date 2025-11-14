@@ -18,10 +18,10 @@ export function PlayButton({
 			variant="default"
 			size="icon"
 			onClick={handlerRunVisualizer}
-			disabled={isDisabled || !isGraphVisualized}
+			disabled={isDisabled}
 			className="disabled:pointer-events-none disabled:opacity-50 transition ease-in bg-green-500 hover:bg-green-600 active:ring-green-300 focus:ring focus:ring-green-300"
 		>
-			{isGraphVisualized ? <Play /> : <RotateCcw />}
+			{isGraphVisualized ? <RotateCcw /> : <Play />}
 		</Button>
 	);
 }

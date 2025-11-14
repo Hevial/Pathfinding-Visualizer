@@ -44,10 +44,10 @@ export function Tile({
 		tileTypeStyle = END_TILE_STYLE;
 	} else if (isWall) {
 		tileTypeStyle = WALL_TILE_STYLE;
-	} else if (isTraversed) {
-		tileTypeStyle = TRAVERSED_TILE_STYLE;
 	} else if (isPath) {
 		tileTypeStyle = PATH_TILE_STYLE;
+	} else if (isTraversed) {
+		tileTypeStyle = TRAVERSED_TILE_STYLE;
 	} else {
 		tileTypeStyle = TILE_STYLE;
 	}

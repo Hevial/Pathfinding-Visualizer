@@ -1,11 +1,22 @@
 export type AlgorithmType = "DIJKSTRA" | "A_STAR" | "BFS" | "DFS";
-export interface AlgorithmSelectType{
+export interface AlgorithmSelectType {
 	label: string;
 	value: AlgorithmType;
 }
+export interface PathfindingResult {
+	traversedTiles: TileType[];
+	path: TileType[];
+}
+export interface PathfindingAlgorithm {
+	run(
+		grid: GridType,
+		startTile: TileType,
+		endTile: TileType
+	): PathfindingResult;
+}
 
 export type MazeType = "NONE" | "RECURSIVE_DIVISION" | "BINARY_TREE";
-export interface MazeSelectType{
+export interface MazeSelectType {
 	label: string;
 	value: MazeType;
 }
@@ -25,7 +36,7 @@ export type TileType = {
 export type GridType = TileType[][];
 
 export type SpeedType = 2 | 1 | 0.5;
-export interface SpeedSelectType{
+export interface SpeedSelectType {
 	label: string;
 	value: SpeedType;
 }

@@ -7,6 +7,9 @@ import { Grid } from "@/components/Grid";
 import { useRef } from "react";
 import { Nav } from "@/components/Nav";
 
+// Import algorithms file for auto registration
+import "@/lib/algorithms/pathfinding/index";
+
 function App() {
 	const isVisualizationRunningRef = useRef(false);
 
@@ -16,7 +19,11 @@ function App() {
 				<TileProvider>
 					<SpeedProvider>
 						<div className="flex flex-col items-center h-screen w-screen">
-							<Nav />
+							<Nav
+								isVisualizationRunningRef={
+									isVisualizationRunningRef
+								}
+							/>
 							<div className="flex flex-col justify-center items-center h-full w-full">
 								<Grid
 									isVisualizationRunningRef={

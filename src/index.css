@@ -190,37 +190,81 @@
 
 /* Animations */
 @theme {
-	--animate-wall: wall 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-	@keyframes wall {
-		0% {
-			transform: scale(0.7);
-		}
-		100% {
-			transform: scale(1);
-		}
-	}
+	--animate-wall: wall 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	--animate-destroy-wall: destroy-wall 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	--animate-traversed: traversed 0.5s cubic-bezier(0, 0, 0.2, 1);
+	--animate-path: path 1.5s cubic-bezier(0, 0, 0.2, 1);
+}
 
-	--animate-destroy-wall: destroy-wall 0.3s cubic-bezier(0.4, 0, 0.2, 1)
-		forwards;
-	@keyframes destroy-wall {
-		0% {
-			background-image: radial-gradient(
-				circle at center,
-				var(--color-gray-200) 100%,
-				transparent 100%
-			);
-			background-size: 100% 100%;
-			background-position: center;
-			background-repeat: no-repeat;
-		}
-		100% {
-			background-image: radial-gradient(
-				circle at center,
-				var(--color-gray-200) 0%,
-				transparent 0%
-			);
-			background-size: 0% 0%;
-			background-position: center;
-		}
+@keyframes wall {
+	0% {
+		transform: scale(0.7);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes destroy-wall {
+	0% {
+		background-image: radial-gradient(
+			circle at center,
+			var(--color-gray-200) 100%,
+			transparent 100%
+		);
+		background-size: 100% 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	100% {
+		background-image: radial-gradient(
+			circle at center,
+			var(--color-gray-200) 0%,
+			transparent 0%
+		);
+		background-size: 0% 0%;
+		background-position: center;
+	}
+}
+
+@keyframes traversed {
+	0% {
+		transform: scale(0.3);
+		background-color: #9333eabf;
+		border-radius: 100%;
+	}
+	50% {
+		background-color: #4f46e5bf;
+	}
+	75% {
+		transform: scale(1.2);
+		background-color: #3b82f6bf;
+	}
+	100% {
+		transform: scale(1);
+		background-color: #22d3ee;
+	}
+}
+
+@keyframes path {
+	0% {
+		transform: scale(0.3);
+		background-color: #e11d48bf;
+		border-radius: 100%;
+	}
+	50% {
+		background-color: #ea580cbf;
+	}
+	75% {
+		transform: scale(1.2);
+		background-color: #fb923cbf;
+	}
+	90% {
+		transform: scale(0.8);
+		background-color: #fde68a;
+	}
+	100% {
+		transform: scale(1);
+		background-color: #a2febf;
 	}
 }

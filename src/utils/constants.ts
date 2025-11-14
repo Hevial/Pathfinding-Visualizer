@@ -31,12 +31,12 @@ export const END_TILE_CONFIGURATION = {
 	parent: null,
 };
 
-export const TILE_STYLE = "border-t border-r border-sky-200";
-export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-400";
-export const START_TILE_STYLE = TILE_STYLE + " bg-green-400";
-export const END_TILE_STYLE = TILE_STYLE + " bg-red-400";
+export const TILE_STYLE = "w-full h-full border-t border-r border-sky-200";
+export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-500";
+export const START_TILE_STYLE = TILE_STYLE + " bg-green-500";
+export const END_TILE_STYLE = TILE_STYLE + " bg-red-600";
 export const WALL_TILE_STYLE = TILE_STYLE + " bg-gray-200";
-export const PATH_TILE_STYLE = TILE_STYLE + " bg-green-500";
+export const PATH_TILE_STYLE = TILE_STYLE + " bg-green-600";
 
 export const MAZES: MazeSelectType[] = [
 	{ label: "None", value: "NONE" },
@@ -47,8 +47,8 @@ export const MAZES: MazeSelectType[] = [
 export const ALGORITHMS: AlgorithmSelectType[] = [
 	{ label: "Dijkstra", value: "DIJKSTRA" },
 	{ label: "A*", value: "A_STAR" },
-	{ label: "BFS", value: "BFS" },
-	{ label: "DFS", value: "DFS" },
+	{ label: "Breadth First Search", value: "BFS" },
+	{ label: "Depth First Search", value: "DFS" },
 ];
 
 export const SPEEDS: SpeedSelectType[] = [
@@ -58,3 +58,4 @@ export const SPEEDS: SpeedSelectType[] = [
 ];
 
 export const SLEEP_TIME = 8;
+export const EXTENDED_SLEEP_TIME = 30;

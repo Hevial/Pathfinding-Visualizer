@@ -104,8 +104,8 @@ export function Nav({
 
 	return (
 		<div className=" h-fit w-full bg-card text-white flex flex-col items-center justify-center p-2 gap-3 border-b-2 border-b-accent">
-			<div className="flex flex-col gap-6 lg:flex-row w-fit justify-between items-center max-w-[56rem]">
-				<div className="flex justify-center items-center text-center w-full">
+			<div className="flex flex-col gap-6 lg:flex-row w-full justify-between items-center max-w-[52rem]">
+				<div className="flex justify-center items-center text-center w-fit">
 					Pathfinding Visualizer
 				</div>
 

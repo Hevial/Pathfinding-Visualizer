@@ -91,14 +91,11 @@ export function Nav({
 		const pathTime = EXTENDED_SLEEP_TIME * path.length * speedVal + 500;
 
 		setTimeout(() => {
-			console.log("BEFORE:", document.getElementById(`37-36`)?.className);
-
 			const newGrid = grid.slice();
 			setGrid(newGrid);
 			setIsGraphVisualized(true);
 			setIsDisabled(false);
 			isVisualizationRunningRef.current = false;
-			console.log("AFTER:", document.getElementById(`37-36`)?.className);
 		}, traversedTime + pathTime);
 	};
 

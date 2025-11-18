@@ -6,53 +6,63 @@ import {
 } from "@/utils/types";
 import { registerAlgorithm } from "./registry";
 import { getUntraversedNeighbors } from "@/utils/getUntraversedNeighbors";
-import { isInQueue } from "@/utils/isInQueue";
+import { Queue } from "@/utils/Queue";
 
-export class BFS implements PathfindingAlgorithm {
+export class Bfs implements PathfindingAlgorithm {
 	run(
 		grid: GridType,
 		startTile: TileType,
 		endTile: TileType
 	): PathfindingResult {
 		const traversedTiles: TileType[] = [];
-		const base = grid[startTile.row][startTile.col]; // Get the start tile from the grid
-		base.distance = 0;
-		base.isTraversed = true;
 
-		const unTraversed = [base]; // Initialize the queue with the start tile
+		// Initialize the starting tile
+		const start = grid[startTile.row][startTile.col];
 
-		while (unTraversed.length > 0) {
-			const tile = unTraversed.shift() as TileType; // Get the first tile from the queue
+		// BFS queue
+		const queue = new Queue<TileType>();
+		queue.enqueue(start);
+
+		// BFS main loop
+		while (!queue.isEmpty()) {
+			const tile = queue.dequeue()!;
+
+			// Skip walls
 			if (tile.isWall) continue;
-			if (tile.distance === Infinity) break;
+
+			// Record traversal order
 			tile.isTraversed = true;
 			traversedTiles.push(tile);
+
+			// Stop if the end tile is reached
 			if (tile.isEnd) break;
 
+			// Explore neighbors
 			const neighbors = getUntraversedNeighbors(grid, tile);
 
-			for (let i = 0; i < neighbors.length; i++) {
-				if (!isInQueue(neighbors[i], unTraversed)) {
-					const n = neighbors[i];
-					n.distance = tile.distance + 1;
+			for (const n of neighbors) {
+				// Enqueue valid, unvisited neighbors
+				if (!queue.contains(n)) {
 					n.parent = tile;
-					unTraversed.push(n);
+					queue.enqueue(n);
 				}
 			}
 		}
 
+		// Path reconstruction (backtracking from the end tile)
 		const path: TileType[] = [];
-		let tile: TileType = grid[endTile.row][endTile.col]; // start from the end tile
+		let tile: TileType = grid[endTile.row][endTile.col];
 
-		while (tile != null) {
-			// Backtrack until the start tile
-			tile.isPath = true;
-			path.unshift(tile);
-			tile = tile.parent!;
+		if (tile.isTraversed) {
+			while (tile) {
+				tile.isPath = true;
+				path.unshift(tile);
+				tile = tile.parent!;
+			}
 		}
 
 		return { traversedTiles, path };
 	}
 }
 
-registerAlgorithm("BFS", BFS);
+registerAlgorithm("BFS", Bfs);

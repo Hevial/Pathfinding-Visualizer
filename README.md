@@ -2,7 +2,7 @@
 
 A dynamic and interactive tool to visualize pathfinding algorithms in action. This project demonstrates how popular algorithms like Dijkstra, A*, BFS, and DFS solve the shortest path problem in grid-based environments. Additionally, it features maze generation algorithms to create interesting scenarios for testing. It is designed to be both educational and visually appealing.
 
-👉 [Live Demo]()
+👉 [Live Demo](https://pathfinding-visualizer-hevial.netlify.app/)
 
 ---
 
@@ -57,3 +57,4 @@ A dynamic and interactive tool to visualize pathfinding algorithms in action. Th
 
 - **Binary Tree**  
   Generates a simple yet structured maze using a binary tree approach.  
+

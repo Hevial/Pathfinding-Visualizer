@@ -1,1 +1,2 @@
-import "./BFS";
+import "./Bfs";
+import "./Dfs";

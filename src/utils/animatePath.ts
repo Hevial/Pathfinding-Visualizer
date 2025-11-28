@@ -24,9 +24,12 @@ export const animatePath = (
 		if (isStartOrEnd) continue;
 
 		setTimeout(() => {
-			document.getElementById(
-				`${tile.row}-${tile.col}`
-			)!.className = `${TRAVERSED_TILE_STYLE} animate-traversed`;
+			document
+				.getElementById(`${tile.row}-${tile.col}`)!
+				.classList.add(
+					...TRAVERSED_TILE_STYLE.split(" "),
+					"animate-traversed"
+				);
 		}, SLEEP_TIME * i * speedVal);
 	}
 

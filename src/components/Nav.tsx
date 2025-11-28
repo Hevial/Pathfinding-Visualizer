@@ -17,6 +17,7 @@ import { ClearButton } from "./ClearButton";
 import { runMazeAlgorithm } from "@/utils/runMazeAlgorithm";
 import { runPanthfindingAlgoritm } from "@/utils/runPathfindingAlgorithm";
 import { animatePath } from "@/utils/animatePath";
+import { resetGridPath } from "@/utils/resetGridPath";
 
 export function Nav({
 	isVisualizationRunningRef,
@@ -69,8 +70,7 @@ export function Nav({
 	const handlerRunVisualizer = () => {
 		if (isGraphVisualized) {
 			setIsGraphVisualized(false);
-			if (maze != "NONE") setMaze("NONE");
-			resetGrid({ grid: grid.slice(), startTile, endTile });
+			resetGridPath({ grid: grid.slice(), startTile, endTile });
 			return;
 		}
 

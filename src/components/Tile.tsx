@@ -43,7 +43,7 @@ export function Tile({
 	} else if (isEnd) {
 		tileTypeStyle = END_TILE_STYLE;
 	} else if (isWall) {
-		tileTypeStyle = WALL_TILE_STYLE;
+		tileTypeStyle = WALL_TILE_STYLE + " animate-wall";
 	} else if (isPath) {
 		tileTypeStyle = PATH_TILE_STYLE;
 	} else if (isTraversed) {

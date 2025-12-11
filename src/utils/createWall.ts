@@ -1,8 +1,9 @@
 import { MAX_COLS, MAX_ROWS, SPEEDS, WALL_TILE_STYLE } from "./constants";
 import { getDelay, isRowColEqual } from "./helpers";
-import { SpeedType, TileType } from "./types";
+import { GridType, SpeedType, TileType } from "./types";
 
 export const createWall = (
+	grid: GridType,
 	startTile: TileType,
 	endTile: TileType,
 	speed: SpeedType
@@ -10,8 +11,11 @@ export const createWall = (
 	const speedValue = SPEEDS.find((s) => s.value === speed)!.value;
 	const perTileDelay = 6 * speedValue - 1;
 
-	for (let row = 0; row < MAX_ROWS; row++) {
-		for (let col = 0; col < MAX_COLS; col++) {
+	const rows = grid.length;
+	const cols = grid[0].length;
+
+	for (let row = 0; row < rows; row++) {
+		for (let col = 0; col < cols; col++) {
 			const isTileValid =
 				(row % 2 === 0 || col % 2 === 0) &&
 				!isRowColEqual(row, col, startTile) &&

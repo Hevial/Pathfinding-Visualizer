@@ -1,7 +1,7 @@
 import { binaryTree } from "@/lib/algorithms/maze/binaryTree";
 import { GridType, MazeType, SpeedType, TileType } from "./types";
 import { constructBorder } from "./constructBorder";
-import { MAX_COLS, MAX_ROWS, SPEEDS } from "./constants";
+import { SPEEDS } from "./constants";
 import { recursiveDivision } from "@/lib/algorithms/maze/recursiveDivision";
 import { sleep } from "./helpers";
 
@@ -20,6 +20,9 @@ export const runMazeAlgorithm = async ({
 	speed: SpeedType;
 	setIsDisabled: (value: boolean) => void;
 }) => {
+	const rows = grid.length;
+	const cols = grid[0].length;
+
 	if (maze === "BINARY_TREE") {
 		await binaryTree({ grid, startTile, endTile, speed, setIsDisabled });
 	} else if (maze === "RECURSIVE_DIVISION") {
@@ -30,8 +33,8 @@ export const runMazeAlgorithm = async ({
 			endTile,
 			row: 1,
 			col: 1,
-			width: MAX_COLS - 2,
-			height: MAX_ROWS - 2,
+			width: cols - 2,
+			height: rows - 2,
 			speed,
 		});
 

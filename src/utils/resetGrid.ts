@@ -1,7 +1,5 @@
 import {
 	END_TILE_CONFIGURATION,
-	MAX_COLS,
-	MAX_ROWS,
 	START_TILE_CONFIGURATION,
 	TILE_STYLE,
 } from "./constants";
@@ -17,8 +15,11 @@ export const resetGrid = ({
 	startTile?: TileType;
 	endTile?: TileType;
 }) => {
-	for (let row = 0; row < MAX_ROWS; row++) {
-		for (let col = 0; col < MAX_COLS; col++) {
+	const rows = grid.length;
+	const cols = grid[0].length;
+
+	for (let row = 0; row < rows; row++) {
+		for (let col = 0; col < cols; col++) {
 			const tile = grid[row][col];
 			tile.isTraversed = false;
 			tile.isPath = false;
@@ -33,7 +34,7 @@ export const resetGrid = ({
 					tileElement.className = TILE_STYLE;
 				}
 
-				if (tile.row === MAX_ROWS - 1) {
+				if (tile.row === rows - 1) {
 					tileElement?.classList.add("border-b");
 				}
 

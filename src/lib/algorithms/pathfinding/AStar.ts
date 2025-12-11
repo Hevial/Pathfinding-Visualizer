@@ -18,7 +18,7 @@ export class AStar implements PathfindingAlgorithm {
 	): PathfindingResult {
 		const traversedTiles: TileType[] = [];
 		const heuristicCost = initHeuristicCost(grid, endTile); // Initialize the heuristic cost for each tile
-		const functionCost = initFunctionCost(); // Initialize the function cost for each tile
+		const functionCost = initFunctionCost(grid); // Initialize the function cost for each tile
 
 		// Initialize the starting tile
 		const start = grid[startTile.row][startTile.col];

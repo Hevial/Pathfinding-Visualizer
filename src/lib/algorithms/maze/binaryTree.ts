@@ -1,4 +1,3 @@
-import { MAX_COLS, MAX_ROWS } from "@/utils/constants";
 import { createWall } from "@/utils/createWall";
 import { destroyWall } from "@/utils/destroyWall";
 import { isRowColEqual, sleep } from "@/utils/helpers";
@@ -17,9 +16,11 @@ export const binaryTree = async ({
 	speed: SpeedType;
 	setIsDisabled: (value: boolean) => void;
 }) => {
-	createWall(startTile, endTile, speed);
+	createWall(grid, startTile, endTile, speed);
+	const rows = grid.length;
+	const cols = grid[0].length;
 
-	await sleep(MAX_ROWS * MAX_COLS);
+	await sleep(rows * cols);
 
 	for (const row of grid) {
 		for (const tile of row) {
@@ -34,13 +35,13 @@ export const binaryTree = async ({
 		}
 	}
 
-	for (let row = 1; row < MAX_ROWS - 1; row += 2) {
-		for (let col = 1; col < MAX_COLS - 1; col += 2) {
-			if (row === MAX_ROWS - 2 && col === MAX_COLS - 2) {
+	for (let row = 1; row < rows - 1; row += 2) {
+		for (let col = 1; col < cols - 1; col += 2) {
+			if (row === rows - 2 && col === cols - 2) {
 				continue;
-			} else if (row === MAX_ROWS - 2) {
+			} else if (row === rows - 2) {
 				await destroyWall(grid, row, col, 1, speed);
-			} else if (col === MAX_COLS - 2) {
+			} else if (col === cols - 2) {
 				await destroyWall(grid, row, col, 0, speed);
 			} else {
 				const isRight = Math.round(Math.random());

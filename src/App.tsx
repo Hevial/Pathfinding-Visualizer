@@ -18,13 +18,16 @@ function App() {
 			<PathfindingProvider>
 				<TileProvider>
 					<SpeedProvider>
-						<div className="flex flex-col items-center h-screen w-screen">
+						<div className="flex flex-col items-center h-screen border-0 border-red-400">
 							<Nav
 								isVisualizationRunningRef={
 									isVisualizationRunningRef
 								}
 							/>
-							<div className="flex flex-col justify-center items-center h-full w-full">
+							<div
+								id="pathfinding-grid"
+								className="flex justify-center items-center h-full w-full border-0 border-blue-400"
+							>
 								<Grid
 									isVisualizationRunningRef={
 										isVisualizationRunningRef

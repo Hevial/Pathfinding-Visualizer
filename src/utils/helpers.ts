@@ -3,11 +3,12 @@ import { GridType, TileType } from "./types";
 
 const createRow = (
 	row: number,
+	cols: number,
 	startTile: TileType,
 	endTile: TileType
 ): TileType[] => {
 	const currentRow: TileType[] = [];
-	for (let col = 0; col < MAX_COLS; col++) {
+	for (let col = 0; col < cols; col++) {
 		currentRow.push({
 			row,
 			col,
@@ -25,22 +26,24 @@ const createRow = (
 
 export const createGrid = (
 	startTile: TileType,
-	endTile: TileType
+	endTile: TileType,
+	rows: number,
+	cols: number
 ): GridType => {
 	const grid: GridType = [];
 
-	for (let row = 0; row < MAX_ROWS; row++) {
-		grid.push(createRow(row, startTile, endTile));
+	for (let row = 0; row < rows; row++) {
+		grid.push(createRow(row, cols, startTile, endTile));
 	}
 	return grid;
 };
 
-export const checkIfStartOrEnd = (row: number, col: number): boolean => {
-	return (
-		(row === 1 && col === 1) ||
-		(row === MAX_ROWS - 2 && col === MAX_COLS - 2)
-	);
-};
+// export const checkIfStartOrEnd = (row: number, col: number): boolean => {
+// 	return (
+// 		(row === 1 && col === 1) ||
+// 		(row === MAX_ROWS - 2 && col === MAX_COLS - 2)
+// 	);
+// };
 
 export const createNewGrid = (
 	grid: GridType,
@@ -57,6 +60,10 @@ export const createNewGrid = (
 	newGrid[row][col] = newTile;
 
 	return newGrid;
+};
+
+export const isTileStartOrEnd = (tile: TileType): boolean => {
+	return tile.isStart || tile.isEnd;
 };
 
 export const isEqual = (tileA: TileType, tileB: TileType): boolean => {

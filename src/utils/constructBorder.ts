@@ -1,4 +1,4 @@
-import { MAX_COLS, MAX_ROWS, SLEEP_TIME, WALL_TILE_STYLE } from "./constants";
+import { SLEEP_TIME, WALL_TILE_STYLE } from "./constants";
 import { isEqual, sleep } from "./helpers";
 import { GridType, TileType } from "./types";
 
@@ -7,6 +7,9 @@ export const constructBorder = async (
 	startTile: TileType,
 	endTile: TileType
 ) => {
+	const rows = grid.length;
+	const cols = grid[0].length;
+
 	const shape = [
 		{ row: 0, col: 1 },
 		{ row: 1, col: 0 },
@@ -21,9 +24,9 @@ export const constructBorder = async (
 		const direction = shape[i];
 		while (
 			row + direction.row >= 0 &&
-			row + direction.row < MAX_ROWS &&
+			row + direction.row < rows &&
 			col + direction.col >= 0 &&
-			col + direction.col < MAX_COLS
+			col + direction.col < cols
 		) {
 			row += direction.row;
 			col += direction.col;
@@ -48,8 +51,8 @@ export const constructBorder = async (
 		}
 
 		if (row < 0) row = 0;
-		if (row >= MAX_ROWS) row = MAX_ROWS - 1;
+		if (row >= rows) row = rows - 1;
 		if (col < 0) col = 0;
-		if (col >= MAX_COLS) col = MAX_COLS - 1;
+		if (col >= cols) col = cols - 1;
 	}
 };

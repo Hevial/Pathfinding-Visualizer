@@ -18,6 +18,7 @@ import { runMazeAlgorithm } from "@/utils/runMazeAlgorithm";
 import { runPanthfindingAlgoritm } from "@/utils/runPathfindingAlgorithm";
 import { animatePath } from "@/utils/animatePath";
 import { resetGridPath } from "@/utils/resetGridPath";
+import { Slider } from "./Slider";
 
 export function Nav({
 	isVisualizationRunningRef,
@@ -33,6 +34,9 @@ export function Nav({
 		setGrid,
 		isGraphVisualized,
 		setIsGraphVisualized,
+		setCellSize,
+		rows,
+		cols,
 	} = usePathfinding();
 	const { speed, setSpeed } = useSpeed();
 	const { startTile, endTile } = useTile();
@@ -101,12 +105,12 @@ export function Nav({
 
 	return (
 		<div className=" h-fit w-full bg-card text-white flex flex-col items-center justify-center p-2 gap-3 border-b-2 border-b-accent">
-			<div className="flex flex-col gap-6 lg:flex-row w-full justify-between items-center max-w-[52rem]">
+			<div className="flex flex-col gap-6 lg:flex-row w-full justify-between items-center max-w-[75vw]">
 				<div className="flex justify-center items-center text-center w-fit">
 					Pathfinding Visualizer
 				</div>
 
-				<div className="flex flex-col gap-2 sm:flex-row justify-center items-end">
+				<div className="flex flex-col gap-2 sm:flex-row justify-center">
 					<Select
 						label="Maze"
 						value={maze}
@@ -136,7 +140,21 @@ export function Nav({
 							//handle speed
 						}}
 					/>
-					<div className=" mt-2 flex gap-2 justify-center items-center w-full">
+					<Slider
+						label="Grid Size"
+						rows={rows}
+						cols={cols}
+						min={8}
+						max={32}
+						step={4}
+						defaulValue={[16]}
+						onChange={(val) => {
+							setCellSize(val);
+							setIsGraphVisualized(false);
+						}}
+						isDisabled={isDisabled}
+					/>
+					<div className=" mt-2 flex gap-2 justify-center items-end w-full">
 						<ClearButton
 							handlerClearGrid={() => {
 								resetGrid({ grid, startTile, endTile });
@@ -154,6 +172,8 @@ export function Nav({
 						/>
 					</div>
 				</div>
+
+				<div className="flex justify-center items-center text-center w-fit"></div>
 			</div>
 		</div>
 	);

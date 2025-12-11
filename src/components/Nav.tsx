@@ -150,6 +150,9 @@ export function Nav({
 						defaulValue={[16]}
 						onChange={(val) => {
 							setCellSize(val);
+							if (maze !== "NONE") {
+								setMaze("NONE");
+							}
 							setIsGraphVisualized(false);
 						}}
 						isDisabled={isDisabled}

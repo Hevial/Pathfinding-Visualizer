@@ -8,7 +8,7 @@ export function Grid({
 }: {
 	isVisualizationRunningRef: MutableRefObject<boolean>;
 }) {
-	const { grid, setGrid, rows, cols, cellSize } = usePathfinding();
+	const { grid, setGrid, rows, cols } = usePathfinding();
 	const [isMouseDown, setIsMouseDown] = useState(false);
 
 	// Handle mouse down: start drawing a wall

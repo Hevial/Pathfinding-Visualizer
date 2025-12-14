@@ -1,4 +1,4 @@
-import { SPEEDS, TILE_STYLE } from "./constants";
+import { SLEEP_TIME, SPEEDS, TILE_STYLE } from "./constants";
 import { sleep } from "./helpers";
 import { GridType, SpeedType } from "./types";
 
@@ -11,6 +11,8 @@ export const destroyWall = async (
 ) => {
 	let targetRow = row;
 	let targetCol = col;
+	const animationDelay =
+		SLEEP_TIME * SPEEDS.find((s) => s.value === speed)!.value;
 
 	if (isRight && grid[row][col + 1]) {
 		targetCol = col + 1;
@@ -23,5 +25,5 @@ export const destroyWall = async (
 
 	grid[targetRow][targetCol].isWall = false;
 	tileElement.className = `${TILE_STYLE} animate-destroy-wall`;
-	await sleep(20 * SPEEDS.find((s) => s.value === speed)!.value - 5);
+	await sleep(animationDelay);
 };

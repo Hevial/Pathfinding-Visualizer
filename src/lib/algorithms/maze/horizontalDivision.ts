@@ -1,4 +1,4 @@
-import { SPEEDS, WALL_TILE_STYLE } from "@/utils/constants";
+import { SLEEP_TIME, SPEEDS, WALL_TILE_STYLE } from "@/utils/constants";
 import {
 	getRandomEvenInt,
 	getRandomOddInt,
@@ -29,6 +29,8 @@ export const horizontalDivision = async ({
 }) => {
 	const makeWallAt = getRandomEvenInt(row, row + height - 1);
 	const makePassageAt = getRandomOddInt(col, col + width - 1);
+	const animationDelay =
+		SLEEP_TIME * SPEEDS.find((s) => s.value === speed)!.value;
 
 	for (let i = 0; i < width; i++) {
 		const isStartOrEnd =
@@ -45,7 +47,7 @@ export const horizontalDivision = async ({
 				tileElement.className = `${WALL_TILE_STYLE} animate-wall`;
 			}
 
-			await sleep(10 * SPEEDS.find((s) => s.value === speed)!.value - 5);
+			await sleep(animationDelay);
 		}
 	}
 

@@ -38,7 +38,7 @@ export const runMazeAlgorithm = async ({
 			speed,
 		});
 
-		await sleep(800 * SPEEDS.find((s) => s.value === speed)!.value);
+		await sleep(400 * SPEEDS.find((s) => s.value === speed)!.value);
 
 		setIsDisabled(false);
 	}

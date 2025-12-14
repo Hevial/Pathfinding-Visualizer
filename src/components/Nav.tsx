@@ -145,7 +145,7 @@ export function Nav({
 						label="Grid Size"
 						rows={rows}
 						cols={cols}
-						min={8}
+						min={12}
 						max={48}
 						step={4}
 						defaulValue={[DEFAULT_CELL_SIZE]}

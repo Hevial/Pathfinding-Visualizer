@@ -25,14 +25,16 @@ export function Slider({
 	cols,
 }: Props) {
 	return (
-		<div className="flex flex-col items-start justify-center gap-1 disabled:opacity-50 disabled:pointer-events-none">
+		<div className="flex flex-col items-start justify-center gap-1">
 			<div className="text-muted-foreground mb-2 flex justify-between items-end w-full">
 				<Label>{label}</Label>
 				<Label>{`${rows}x${cols}`}</Label>
 			</div>
 
 			<ShadcnSlider
-				className="w-full sm:w-36"
+				className={`w-full sm:w-36 ${
+					isDisabled ? "opacity-50 pointer-events-none" : ""
+				}`}
 				defaultValue={defaulValue}
 				min={min}
 				max={max}

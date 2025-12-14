@@ -1,7 +1,5 @@
 import {
 	END_TILE_CONFIGURATION,
-	MAX_COLS,
-	MAX_ROWS,
 	START_TILE_CONFIGURATION,
 	TILE_STYLE,
 } from "./constants";

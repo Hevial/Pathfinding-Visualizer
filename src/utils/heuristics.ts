@@ -1,4 +1,3 @@
-import { MAX_COLS, MAX_ROWS } from "./constants";
 import { GridType, TileType } from "./types";
 
 const manhattanDistance = (tileA: TileType, tileB: TileType) => {
@@ -40,7 +39,7 @@ export const initHeuristicCost = (
  * Initializes a 2D array of function costs for pathfinding algorithm.
  * Each cell in the grid is set to Infinity as the initial cost value.
  *
- * @returns {number[][]} A 2D array of dimensions MAX_ROWS × MAX_COLS with all values set to Infinity.
+ * @returns {number[][]} A 2D array of dimensions rows × cols with all values set to Infinity.
  */
 export const initFunctionCost = (grid: GridType): number[][] => {
 	const functionCost = [];

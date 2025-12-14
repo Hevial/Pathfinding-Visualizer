@@ -6,6 +6,9 @@ import {
 
 export const MAX_ROWS = 39;
 export const MAX_COLS = 83;
+export const DEFAULT_CELL_SIZE = 20;
+export const GRID_CONTAINER_ID = "pathfinding-grid";
+export const RESIZE_DEBOUNCE_MS = 10;
 
 export const START_TILE_CONFIGURATION = {
 	row: 1,

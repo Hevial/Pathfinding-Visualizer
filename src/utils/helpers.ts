@@ -1,4 +1,4 @@
-import { MAX_COLS, MAX_ROWS } from "./constants";
+import { END_TILE_CONFIGURATION, START_TILE_CONFIGURATION } from "./constants";
 import { GridType, TileType } from "./types";
 
 const createRow = (
@@ -38,12 +38,30 @@ export const createGrid = (
 	return grid;
 };
 
-// export const checkIfStartOrEnd = (row: number, col: number): boolean => {
-// 	return (
-// 		(row === 1 && col === 1) ||
-// 		(row === MAX_ROWS - 2 && col === MAX_COLS - 2)
-// 	);
-// };
+export const calculateOddCellCount = (
+	cellSize: number,
+	containerSize: number
+): number => {
+	let calculatedCells = Math.floor(containerSize / cellSize);
+	return calculatedCells % 2 === 0 ? calculatedCells + 1 : calculatedCells;
+};
+
+// Helper function to create tile configurations based on grid dimensions
+export const createTileConfigs = (rowCount: number, colCount: number) => {
+	const startTileConfig = {
+		...START_TILE_CONFIGURATION,
+		row: 1,
+		col: 1,
+	};
+
+	const endTileConfig = {
+		...END_TILE_CONFIGURATION,
+		row: Math.max(3, rowCount - 2),
+		col: Math.max(3, colCount - 2),
+	};
+
+	return { startTileConfig, endTileConfig };
+};
 
 export const createNewGrid = (
 	grid: GridType,
@@ -82,8 +100,13 @@ export const sleep = (ms: number) => {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const getDelay = (delay: number, row: number, col: number) => {
-	return delay * (row * (MAX_COLS / 2) + col);
+export const getDelay = (
+	delay: number,
+	row: number,
+	col: number,
+	cols: number
+) => {
+	return delay * (row * (cols / 2) + col);
 };
 
 export const getRandomInt = (min: number, max: number): number => {

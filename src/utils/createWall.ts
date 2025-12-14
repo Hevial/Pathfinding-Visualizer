@@ -1,4 +1,4 @@
-import { MAX_COLS, MAX_ROWS, SPEEDS, WALL_TILE_STYLE } from "./constants";
+import { SPEEDS, WALL_TILE_STYLE } from "./constants";
 import { getDelay, isRowColEqual } from "./helpers";
 import { GridType, SpeedType, TileType } from "./types";
 
@@ -28,7 +28,7 @@ export const createWall = (
 
 			setTimeout(() => {
 				tileElement.className = `${WALL_TILE_STYLE} animate-wall`;
-			}, getDelay(perTileDelay, row, col));
+			}, getDelay(perTileDelay, row, col, cols));
 		}
 	}
 };

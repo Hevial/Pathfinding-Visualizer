@@ -36,8 +36,19 @@ function App() {
 							</div>
 						</div>
 
-						<div className="fixed bottom-4 right-4 text-xs text-gray-400 border-gray-600 border rounded-md p-2">
-							Development Build
+						{/* Dev badge: always visible while app is in development phase */}
+						<div
+							className="fixed bottom-1.5 right-1.5 z-40 px-2 py-1 text-[10px] rounded-full 
+							bg-white/10 dark:bg-neutral-900/30 border border-white/20 dark:border-neutral-700/40 
+							text-neutral-700 dark:text-neutral-300 shadow-md 
+							backdrop-blur-md 
+							flex items-center gap-1 "
+						>
+							<span
+								className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500/80 animate-pulse"
+								aria-hidden="true"
+							/>
+							<span>Dev build</span>
 						</div>
 					</SpeedProvider>
 				</TileProvider>

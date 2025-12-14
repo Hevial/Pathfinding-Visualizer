@@ -2,14 +2,19 @@ import {
 	createContext,
 	ReactNode,
 	useState,
-	useEffect,
 	useLayoutEffect,
+	useMemo,
 } from "react";
 import { AlgorithmType, GridType, MazeType } from "@/utils/types";
-import { createGrid } from "@/utils/helpers";
 import {
-	END_TILE_CONFIGURATION,
-	START_TILE_CONFIGURATION,
+	calculateOddCellCount,
+	createGrid,
+	createTileConfigs,
+} from "@/utils/helpers";
+import {
+	DEFAULT_CELL_SIZE,
+	GRID_CONTAINER_ID,
+	RESIZE_DEBOUNCE_MS,
 } from "@/utils/constants";
 
 interface PathfindingContextInterface {
@@ -37,72 +42,35 @@ export const PathfindingProvider = ({ children }: { children: ReactNode }) => {
 	const [algorithm, setAlgorithm] = useState<AlgorithmType>("BFS");
 	const [maze, setMaze] = useState<MazeType>("NONE");
 
-	const [cellSize, setCellSize] = useState<number>(16); // in pixels
-	const [rows, setRows] = useState<number>(() => {
-		const container =
-			typeof document !== "undefined"
-				? document.getElementById("pathfinding-grid")
-				: null;
-		const height =
-			container?.clientHeight ??
-			(typeof window !== "undefined" ? window.innerHeight : 0);
-		let calculatedRows = Math.floor(height / cellSize);
-		return calculatedRows % 2 === 0 ? calculatedRows + 1 : calculatedRows;
-	});
-	const [cols, setCols] = useState<number>(() => {
-		const container =
-			typeof document !== "undefined"
-				? document.getElementById("pathfinding-grid")
-				: null;
-		const width =
-			container?.clientWidth ??
-			(typeof window !== "undefined" ? window.innerWidth : 0);
-		let calculatedCols = Math.floor(width / cellSize);
-		return calculatedCols % 2 === 0 ? calculatedCols + 1 : calculatedCols;
-	});
-	const startTileInitial = {
-		...START_TILE_CONFIGURATION,
-		row: 1,
-		col: 1,
-	};
-
-	const endTileInitial = {
-		...END_TILE_CONFIGURATION,
-		row: rows - 2,
-		col: cols - 2,
-	};
-
-	const [grid, setGrid] = useState<GridType>(
-		createGrid(startTileInitial, endTileInitial, rows, cols)
-	);
+	const [cellSize, setCellSize] = useState<number>(DEFAULT_CELL_SIZE);
+	const [rows, setRows] = useState<number>(0);
+	const [cols, setCols] = useState<number>(0);
+	const [grid, setGrid] = useState<GridType>([]);
 	const [isGraphVisualized, setIsGraphVisualized] = useState<boolean>(false);
 
+	// Recalculate grid dimensions on mount and when cellSize changes
 	useLayoutEffect(() => {
 		const updateGridDimensions = () => {
-			const container = document.getElementById("pathfinding-grid");
+			const container = document.getElementById(GRID_CONTAINER_ID);
 			if (!container) return;
 
-			let calculatedRows = Math.floor(container.clientHeight / cellSize);
-			calculatedRows =
-				calculatedRows % 2 === 0 ? calculatedRows + 1 : calculatedRows;
+			const calculatedRows = calculateOddCellCount(
+				cellSize,
+				container.clientHeight
+			);
 
-			let calculatedCols = Math.floor(container.clientWidth / cellSize);
-			calculatedCols =
-				calculatedCols % 2 === 0 ? calculatedCols + 1 : calculatedCols;
+			const calculatedCols = calculateOddCellCount(
+				cellSize,
+				container.clientWidth
+			);
 
 			setRows(calculatedRows);
 			setCols(calculatedCols);
-			const startTileConfig = {
-				...START_TILE_CONFIGURATION,
-				row: 1,
-				col: 1,
-			};
 
-			const endTileConfig = {
-				...END_TILE_CONFIGURATION,
-				row: calculatedRows - 2,
-				col: calculatedCols - 2,
-			};
+			const { startTileConfig, endTileConfig } = createTileConfigs(
+				calculatedRows,
+				calculatedCols
+			);
 
 			const newGrid = createGrid(
 				startTileConfig,
@@ -113,77 +81,50 @@ export const PathfindingProvider = ({ children }: { children: ReactNode }) => {
 			setGrid(newGrid);
 		};
 
-		// Ricalcola subito quando il provider viene montato o quando cellSize cambia
+		// Initial calculation
 		updateGridDimensions();
 
-		// Ricalcola anche al resize della finestra, con debounce per performance
-		const DEBOUNCE_MS = 10;
+		// Debounced resize handler for performance optimization
 		let resizeTimer: ReturnType<typeof setTimeout> | null = null;
 
-		const debouncedResize = () => {
+		const handleResize = () => {
 			if (resizeTimer) clearTimeout(resizeTimer);
 			resizeTimer = setTimeout(() => {
 				updateGridDimensions();
 				resizeTimer = null;
-			}, DEBOUNCE_MS);
+			}, RESIZE_DEBOUNCE_MS);
 		};
 
-		// Ricalcola anche al resize della finestra
-		window.addEventListener("resize", debouncedResize);
+		window.addEventListener("resize", handleResize);
+
 		return () => {
 			if (resizeTimer) clearTimeout(resizeTimer);
-			window.removeEventListener("resize", debouncedResize);
+			window.removeEventListener("resize", handleResize);
 		};
 	}, [cellSize]);
 
-	// Aggiorna la grid quando rows/cols cambiano (assicura sync tra grid e dimensioni)
-	useEffect(() => {
-		if (rows <= 0 || cols <= 0) return;
-
-		const startTileConfig = {
-			...START_TILE_CONFIGURATION,
-			row: 1,
-			col: 1,
-		};
-
-		const endTileConfig = {
-			...END_TILE_CONFIGURATION,
-			row: Math.max(3, rows - 2),
-			col: Math.max(3, cols - 2),
-		};
-
-		const newGrid = createGrid(startTileConfig, endTileConfig, rows, cols);
-		setGrid(newGrid);
-	}, [rows, cols]);
-
-	useEffect(() => {
-		// Debug: logga lo stato aggiornato dopo che rows/cols/cellSize cambiano
-		console.log("Grid dimensions updated:", {
+	const contextValue = useMemo(
+		() => ({
+			algorithm,
+			setAlgorithm,
+			maze,
+			setMaze,
+			grid,
+			setGrid,
+			isGraphVisualized,
+			setIsGraphVisualized,
 			cellSize,
+			setCellSize,
 			rows,
+			setRows,
 			cols,
-		});
-	}, [cellSize, rows, cols]);
+			setCols,
+		}),
+		[algorithm, maze, grid, isGraphVisualized, cellSize, rows, cols]
+	);
 
 	return (
-		<PathfindingContext.Provider
-			value={{
-				algorithm,
-				setAlgorithm,
-				maze,
-				setMaze,
-				grid,
-				setGrid,
-				isGraphVisualized,
-				setIsGraphVisualized,
-				cellSize,
-				setCellSize,
-				rows,
-				setRows,
-				cols,
-				setCols,
-			}}
-		>
+		<PathfindingContext.Provider value={contextValue}>
 			{children}
 		</PathfindingContext.Provider>
 	);

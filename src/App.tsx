@@ -37,7 +37,7 @@ function App() {
 						</div>
 
 						{/* Dev badge: always visible while app is in development phase */}
-						<div
+						{/* <div
 							className="fixed bottom-1.5 right-1.5 z-40 px-2 py-1 text-[10px] rounded-full 
 							bg-white/10 dark:bg-neutral-900/30 border border-white/20 dark:border-neutral-700/40 
 							text-neutral-700 dark:text-neutral-300 shadow-md 
@@ -49,7 +49,7 @@ function App() {
 								aria-hidden="true"
 							/>
 							<span>Dev build</span>
-						</div>
+						</div> */}
 					</SpeedProvider>
 				</TileProvider>
 			</PathfindingProvider>

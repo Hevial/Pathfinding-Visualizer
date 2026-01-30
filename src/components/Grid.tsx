@@ -1,20 +1,22 @@
 import { usePathfinding } from "@/hooks/usePathfinding";
-import { MAX_COLS, MAX_ROWS } from "@/utils/constants";
 import { Tile } from "./Tile";
 import { MutableRefObject, useState } from "react";
-import { checkIfStartOrEnd, createNewGrid } from "@/utils/helpers";
+import { createNewGrid, isTileStartOrEnd } from "@/utils/helpers";
 
 export function Grid({
 	isVisualizationRunningRef,
 }: {
 	isVisualizationRunningRef: MutableRefObject<boolean>;
 }) {
-	const { grid, setGrid } = usePathfinding();
+	const { grid, setGrid, rows, cols } = usePathfinding();
 	const [isMouseDown, setIsMouseDown] = useState(false);
 
 	// Handle mouse down: start drawing a wall
 	const handleMouseDown = (row: number, col: number) => {
-		if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col))
+		if (
+			isVisualizationRunningRef.current ||
+			isTileStartOrEnd(grid[row][col])
+		)
 			return;
 
 		setIsMouseDown(true);
@@ -25,7 +27,10 @@ export function Grid({
 
 	// Handle mouse up: stop drawing a wall
 	const handleMouseUp = (row: number, col: number) => {
-		if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col))
+		if (
+			isVisualizationRunningRef.current ||
+			isTileStartOrEnd(grid[row][col])
+		)
 			return;
 
 		setIsMouseDown(false);
@@ -33,7 +38,10 @@ export function Grid({
 
 	// Handle mouse enter: draw walls while dragging
 	const handleMouseEnter = (row: number, col: number) => {
-		if (isVisualizationRunningRef.current || checkIfStartOrEnd(row, col))
+		if (
+			isVisualizationRunningRef.current ||
+			isTileStartOrEnd(grid[row][col])
+		)
 			return;
 
 		if (isMouseDown) {
@@ -44,11 +52,11 @@ export function Grid({
 
 	return (
 		<div
-			className="grid aspect-square h-full max-h-[min(100vw,100vh)] p-4"
+			className="grid h-full w-full p-4"
 			style={{
 				display: "grid",
-				gridTemplateColumns: `repeat(${MAX_COLS},  minmax(0, 1fr))`,
-				gridTemplateRows: `repeat(${MAX_ROWS},  minmax(0, 1fr))`,
+				gridTemplateColumns: `repeat(${cols},  1fr)`,
+				gridTemplateRows: `repeat(${rows},  1fr)`,
 			}}
 		>
 			{grid.map((r) =>
@@ -76,6 +84,7 @@ export function Grid({
 							onMouseDown={() => handleMouseDown(row, col)}
 							onMouseUp={() => handleMouseUp(row, col)}
 							onMouseEnter={() => handleMouseEnter(row, col)}
+							totalRows={rows}
 						/>
 					);
 				})

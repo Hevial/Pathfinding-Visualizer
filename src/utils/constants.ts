@@ -5,7 +5,10 @@ import {
 } from "@/utils/types";
 
 export const MAX_ROWS = 39;
-export const MAX_COLS = 39;
+export const MAX_COLS = 83;
+export const DEFAULT_CELL_SIZE = 20;
+export const GRID_CONTAINER_ID = "pathfinding-grid";
+export const RESIZE_DEBOUNCE_MS = 10;
 
 export const START_TILE_CONFIGURATION = {
 	row: 1,
@@ -31,7 +34,8 @@ export const END_TILE_CONFIGURATION = {
 	parent: null,
 };
 
-export const TILE_STYLE = "w-full h-full border-t border-r border-sky-200";
+export const TILE_STYLE =
+	"box-border w-full h-full border-t border-r border-sky-200";
 export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-500";
 export const START_TILE_STYLE = TILE_STYLE + " bg-green-500";
 export const END_TILE_STYLE = TILE_STYLE + " bg-red-600";

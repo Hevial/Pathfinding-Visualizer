@@ -1,6 +1,5 @@
 import {
 	END_TILE_STYLE,
-	MAX_ROWS,
 	PATH_TILE_STYLE,
 	START_TILE_STYLE,
 	TILE_STYLE,
@@ -24,6 +23,7 @@ export function Tile({
 	onMouseDown,
 	onMouseUp,
 	onMouseEnter,
+	totalRows,
 }: {
 	row: number;
 	col: number;
@@ -35,6 +35,7 @@ export function Tile({
 	onMouseDown: MouseFunctions;
 	onMouseUp: MouseFunctions;
 	onMouseEnter: MouseFunctions;
+	totalRows: number;
 }) {
 	let tileTypeStyle;
 
@@ -53,8 +54,8 @@ export function Tile({
 	}
 
 	const borderStyle =
-		row === MAX_ROWS - 1 ? "border-b" : col === 0 ? "border-l" : "";
-	const edgeStyle = row === MAX_ROWS - 1 && col === 0 ? "border-l" : "";
+		row === totalRows - 1 ? "border-b" : col === 0 ? "border-l" : "";
+	const edgeStyle = row === totalRows - 1 && col === 0 ? "border-l" : "";
 
 	return (
 		<div

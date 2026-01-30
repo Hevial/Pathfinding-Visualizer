@@ -1,4 +1,3 @@
-import { MAX_COLS, MAX_ROWS } from "./constants";
 import { GridType, TileType } from "./types";
 
 const manhattanDistance = (tileA: TileType, tileB: TileType) => {
@@ -21,11 +20,13 @@ export const initHeuristicCost = (
 	endTile: TileType
 ): number[][] => {
 	const heuristicCost = [];
+	const rows = grid.length;
+	const cols = grid[0].length;
 
-	for (let i = 0; i < MAX_ROWS; i++) {
+	for (let i = 0; i < rows; i++) {
 		const row = [];
 
-		for (let j = 0; j < MAX_COLS; j++) {
+		for (let j = 0; j < cols; j++) {
 			row.push(manhattanDistance(grid[i][j], endTile));
 		}
 		heuristicCost.push(row);
@@ -38,14 +39,16 @@ export const initHeuristicCost = (
  * Initializes a 2D array of function costs for pathfinding algorithm.
  * Each cell in the grid is set to Infinity as the initial cost value.
  *
- * @returns {number[][]} A 2D array of dimensions MAX_ROWS × MAX_COLS with all values set to Infinity.
+ * @returns {number[][]} A 2D array of dimensions rows × cols with all values set to Infinity.
  */
-export const initFunctionCost = (): number[][] => {
+export const initFunctionCost = (grid: GridType): number[][] => {
 	const functionCost = [];
+	const rows = grid.length;
+	const cols = grid[0].length;
 
-	for (let i = 0; i < MAX_ROWS; i++) {
+	for (let i = 0; i < rows; i++) {
 		const row = [];
-		for (let j = 0; j < MAX_COLS; j++) {
+		for (let j = 0; j < cols; j++) {
 			row.push(Infinity);
 		}
 		functionCost.push(row);

@@ -56,8 +56,6 @@ export function Nav({
 		setMaze(maze);
 		setIsDisabled(true);
 
-		console.log(maze);
-
 		runMazeAlgorithm({
 			maze,
 			grid,

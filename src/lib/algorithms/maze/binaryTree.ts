@@ -1,6 +1,7 @@
+import { SLEEP_TIME, SPEEDS } from "@/utils/constants";
 import { createWall } from "@/utils/createWall";
 import { destroyWall } from "@/utils/destroyWall";
-import { isRowColEqual, sleep } from "@/utils/helpers";
+import { getDelay, isRowColEqual, sleep } from "@/utils/helpers";
 import { GridType, SpeedType, TileType } from "@/utils/types";
 
 export const binaryTree = async ({
@@ -19,8 +20,10 @@ export const binaryTree = async ({
 	createWall(grid, startTile, endTile, speed);
 	const rows = grid.length;
 	const cols = grid[0].length;
+	const animationDelay =
+		SLEEP_TIME * SPEEDS.find((s) => s.value === speed)!.value;
 
-	await sleep(rows * cols);
+	await sleep(getDelay(animationDelay, rows, cols, cols) * 0.2);
 
 	for (const row of grid) {
 		for (const tile of row) {
@@ -40,15 +43,16 @@ export const binaryTree = async ({
 			if (row === rows - 2 && col === cols - 2) {
 				continue;
 			} else if (row === rows - 2) {
-				await destroyWall(grid, row, col, 1, speed);
+				destroyWall(grid, row, col, 1, speed);
 			} else if (col === cols - 2) {
-				await destroyWall(grid, row, col, 0, speed);
+				destroyWall(grid, row, col, 0, speed);
 			} else {
 				const isRight = Math.round(Math.random());
-				await destroyWall(grid, row, col, isRight, speed);
+				destroyWall(grid, row, col, isRight, speed);
 			}
 		}
 	}
 
+	await sleep(getDelay(animationDelay, rows, cols, cols));
 	setIsDisabled(false);
 };

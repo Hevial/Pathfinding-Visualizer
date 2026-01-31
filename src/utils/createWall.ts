@@ -1,4 +1,4 @@
-import { SPEEDS, WALL_TILE_STYLE } from "./constants";
+import { SLEEP_TIME, SPEEDS, WALL_TILE_STYLE } from "./constants";
 import { getDelay, isRowColEqual } from "./helpers";
 import { GridType, SpeedType, TileType } from "./types";
 
@@ -6,10 +6,10 @@ export const createWall = (
 	grid: GridType,
 	startTile: TileType,
 	endTile: TileType,
-	speed: SpeedType
+	speed: SpeedType,
 ) => {
 	const speedValue = SPEEDS.find((s) => s.value === speed)!.value;
-	const perTileDelay = 6 * speedValue - 1;
+	const perTileDelay = SLEEP_TIME * speedValue - 1;
 
 	const rows = grid.length;
 	const cols = grid[0].length;
@@ -26,9 +26,12 @@ export const createWall = (
 			const tileElement = document.getElementById(`${row}-${col}`);
 			if (!tileElement) continue;
 
-			setTimeout(() => {
-				tileElement.className = `${WALL_TILE_STYLE} animate-wall`;
-			}, getDelay(perTileDelay, row, col, cols));
+			setTimeout(
+				() => {
+					tileElement.className = `${WALL_TILE_STYLE} animate-wall`;
+				},
+				getDelay(perTileDelay, row, col, cols),
+			);
 		}
 	}
 };
